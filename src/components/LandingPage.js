@@ -1,12 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { HiArrowLeft } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
 import dimasImage from "../assets/images/logo.png"; // Pastikan path sesuai dengan struktur folder Anda
 
 const LandingPage = () => {
-  const navigate = useNavigate();
-
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -16,16 +12,7 @@ const LandingPage = () => {
     >
       {/* Navbar */}
       <nav className="flex justify-between items-center px-8 py-4 bg-blue-800 shadow-md">
-        <div className="flex items-center space-x-4">
-          <button
-            onClick={() => navigate(-1)}
-            className="text-white hover:text-orange-300 text-xl transition-colors"
-            title="Kembali"
-          >
-            <HiArrowLeft />
-          </button>
-          <div className="text-2xl font-bold text-white">Dimas.Net</div>
-        </div>
+        <div className="text-2xl font-bold text-white">Dimas.Net</div>
         <ul className="flex space-x-6 text-sm">
           <li>
             <a

@@ -64,7 +64,7 @@ function MainMenu() {
 
       {/* Footer */}
       <footer className="bg-blue-800 py-6 text-center text-sm text-gray-300">
-        &copy; 2025 Dimas Rosyidin | All Rights Reserved
+        &copy; 2025 Dimas Rosyidin
       </footer>
     </div>
   );

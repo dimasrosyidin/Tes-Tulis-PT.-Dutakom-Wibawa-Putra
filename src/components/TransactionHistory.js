@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Pencil, Trash2, Check, X } from 'lucide-react';
+import { DatePicker } from 'antd';
+import 'antd/dist/reset.css';
 
 function TransactionHistory() {
   const [transactions, setTransactions] = useState([]);
@@ -80,11 +82,10 @@ function TransactionHistory() {
         {/* Filter */}
         <div className="mb-6 text-center">
           <label className="mr-2 font-semibold text-blue-900">Filter Tanggal:</label>
-          <input
-            type="date"
-            value={filterDate}
-            onChange={(e) => setFilterDate(e.target.value)}
-            className="px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          <DatePicker
+            onChange={(date, dateString) => setFilterDate(dateString)}
+            format="YYYY-MM-DD"
+            allowClear
           />
         </div>
 
