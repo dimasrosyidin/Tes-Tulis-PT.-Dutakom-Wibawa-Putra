@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft, Pencil, Trash2, Check, X } from 'lucide-react';
 
 function TransactionHistory() {
   const [transactions, setTransactions] = useState([]);
@@ -8,6 +10,7 @@ function TransactionHistory() {
   const [editId, setEditId] = useState(null);
   const [editPackageName, setEditPackageName] = useState('');
   const [editPrice, setEditPrice] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const dummyTransactions = [
@@ -33,7 +36,7 @@ function TransactionHistory() {
   const handleUpdate = () => {
     const updated = transactions.map(tx =>
       tx.id === editId
-        ? { ...tx, packageName: editPackageName, price: parseInt(editPrice) }
+        ? { ...tx, packageName: editPackageName, price: parseInt(editPrice, 10) }
         : tx
     );
     setTransactions(updated);
@@ -45,7 +48,7 @@ function TransactionHistory() {
   );
 
   return (
-    <div className="min-h-screen bg-blue-100 text-black flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white text-black flex flex-col">
       {/* Navbar */}
       <nav className="flex justify-between items-center px-8 py-4 bg-blue-800 shadow-md text-white">
         <div className="text-2xl font-bold">Dimas.Net</div>
@@ -56,33 +59,50 @@ function TransactionHistory() {
         </ul>
       </nav>
 
-      <div className="p-8 flex-grow">
-        <h1 className="text-2xl font-bold text-blue-900 mb-6">Riwayat Transaksi Anda</h1>
+      {/* Main Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="p-8 flex-grow"
+      >
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center text-blue-700 hover:text-blue-900 mb-6 transition"
+        >
+          <ArrowLeft className="mr-2" size={18} />
+          <span>Kembali</span>
+        </button>
 
-        <div className="mb-4">
+        <h1 className="text-3xl font-bold text-blue-900 mb-6 text-center">Riwayat Transaksi Anda</h1>
+
+        {/* Filter */}
+        <div className="mb-6 text-center">
           <label className="mr-2 font-semibold text-blue-900">Filter Tanggal:</label>
           <input
             type="date"
             value={filterDate}
             onChange={(e) => setFilterDate(e.target.value)}
-            className="px-2 py-1 rounded"
+            className="px-3 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        <div className="bg-white rounded shadow overflow-x-auto">
-          <table className="w-full text-left">
+        {/* Transactions Table */}
+        <div className="bg-white rounded-xl shadow-lg overflow-x-auto border">
+          <table className="w-full text-sm text-left">
             <thead className="bg-blue-200 text-blue-800">
               <tr>
-                <th className="px-4 py-2">ID</th>
-                <th className="px-4 py-2">Paket</th>
-                <th className="px-4 py-2">Harga</th>
-                <th className="px-4 py-2">Tanggal</th>
-                <th className="px-4 py-2">Aksi</th>
+                <th className="px-4 py-3">ID</th>
+                <th className="px-4 py-3">Paket</th>
+                <th className="px-4 py-3">Harga</th>
+                <th className="px-4 py-3">Tanggal</th>
+                <th className="px-4 py-3">Aksi</th>
               </tr>
             </thead>
             <tbody>
               {filteredTransactions.map(tx => (
-                <tr key={tx.id} className="border-t">
+                <tr key={tx.id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-2">{tx.id}</td>
                   <td className="px-4 py-2">
                     {editId === tx.id ? (
@@ -90,7 +110,7 @@ function TransactionHistory() {
                         type="text"
                         value={editPackageName}
                         onChange={(e) => setEditPackageName(e.target.value)}
-                        className="border px-2 py-1 rounded"
+                        className="border px-2 py-1 rounded focus:outline-none"
                       />
                     ) : (
                       tx.packageName
@@ -102,23 +122,47 @@ function TransactionHistory() {
                         type="number"
                         value={editPrice}
                         onChange={(e) => setEditPrice(e.target.value)}
-                        className="border px-2 py-1 rounded"
+                        className="border px-2 py-1 rounded focus:outline-none"
                       />
                     ) : (
                       `Rp${tx.price.toLocaleString()}`
                     )}
                   </td>
                   <td className="px-4 py-2">{tx.purchaseDate}</td>
-                  <td className="px-4 py-2 space-x-2">
+                  <td className="px-4 py-2 flex items-center gap-4">
                     {editId === tx.id ? (
                       <>
-                        <button onClick={handleUpdate} className="text-green-500 hover:underline">Simpan</button>
-                        <button onClick={() => setEditId(null)} className="text-gray-500 hover:underline">Batal</button>
+                        <button
+                          onClick={handleUpdate}
+                          title="Simpan"
+                          className="text-green-600 hover:text-green-800 transition"
+                        >
+                          <Check size={18} />
+                        </button>
+                        <button
+                          onClick={() => setEditId(null)}
+                          title="Batal"
+                          className="text-gray-500 hover:text-gray-700 transition"
+                        >
+                          <X size={18} />
+                        </button>
                       </>
                     ) : (
                       <>
-                        <button onClick={() => handleEdit(tx)} className="text-blue-500 hover:underline">Edit</button>
-                        <button onClick={() => handleDelete(tx.id)} className="text-red-500 hover:underline">Hapus</button>
+                        <button
+                          onClick={() => handleEdit(tx)}
+                          title="Edit"
+                          className="text-blue-600 hover:text-blue-800 transition"
+                        >
+                          <Pencil size={18} />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(tx.id)}
+                          title="Hapus"
+                          className="text-red-600 hover:text-red-800 transition"
+                        >
+                          <Trash2 size={18} />
+                        </button>
                       </>
                     )}
                   </td>
@@ -126,17 +170,15 @@ function TransactionHistory() {
               ))}
               {filteredTransactions.length === 0 && (
                 <tr>
-                  <td colSpan="5" className="text-center text-gray-500 py-4">Tidak ada transaksi ditemukan.</td>
+                  <td colSpan="5" className="text-center text-gray-500 py-4">
+                    Tidak ada transaksi ditemukan.
+                  </td>
                 </tr>
               )}
             </tbody>
           </table>
         </div>
-
-        <div className="mt-4">
-          <Link to="/main-menu" className="text-blue-800 hover:underline">← Kembali ke Menu Utama</Link>
-        </div>
-      </div>
+      </motion.div>
 
       {/* Footer */}
       <footer className="bg-blue-800 py-6 text-center text-sm text-gray-300">

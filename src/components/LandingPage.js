@@ -1,7 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { HiArrowLeft } from "react-icons/hi";
+import { useNavigate } from "react-router-dom";
+import dimasImage from "../assets/images/logo.png"; // Pastikan path sesuai dengan struktur folder Anda
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -9,8 +14,18 @@ const LandingPage = () => {
       transition={{ duration: 0.8 }}
       className="bg-[#f4f8ff] text-gray-800 min-h-screen flex flex-col"
     >
+      {/* Navbar */}
       <nav className="flex justify-between items-center px-8 py-4 bg-blue-800 shadow-md">
-        <div className="text-2xl font-bold text-white">Dimas.Net</div>
+        <div className="flex items-center space-x-4">
+          <button
+            onClick={() => navigate(-1)}
+            className="text-white hover:text-orange-300 text-xl transition-colors"
+            title="Kembali"
+          >
+            <HiArrowLeft />
+          </button>
+          <div className="text-2xl font-bold text-white">Dimas.Net</div>
+        </div>
         <ul className="flex space-x-6 text-sm">
           <li>
             <a
@@ -23,6 +38,7 @@ const LandingPage = () => {
         </ul>
       </nav>
 
+      {/* Content */}
       <div className="flex flex-col md:flex-row flex-grow items-center justify-center px-8 py-12 gap-8">
         {/* Left section */}
         <div className="md:w-1/2 text-center md:text-left">
@@ -73,15 +89,15 @@ const LandingPage = () => {
           transition={{ delay: 0.6, duration: 0.6 }}
           className="md:w-1/2 max-w-sm bg-white p-6 rounded-lg shadow-xl text-left"
         >
-          {/* Update image source */}
           <img
-            src="/src/assets/images/logo.png" // Path to your image in the assets folder
+            src={dimasImage}
             alt="Professional counselor"
             className="rounded-md w-full h-64 object-cover mb-4"
           />
         </motion.div>
       </div>
 
+      {/* Footer */}
       <motion.footer
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}

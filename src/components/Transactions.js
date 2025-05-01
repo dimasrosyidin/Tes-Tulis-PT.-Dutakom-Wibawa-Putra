@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { ArrowLeft } from 'lucide-react';
 
 function Transactions() {
   const [packages, setPackages] = useState([]);
@@ -20,7 +22,8 @@ function Transactions() {
   };
 
   return (
-    <div className="min-h-screen bg-blue-100 text-black flex flex-col">
+    <div className="min-h-screen bg-gradient-to-b from-blue-100 to-white text-black flex flex-col">
+      {/* Navbar */}
       <nav className="flex justify-between items-center px-8 py-4 bg-blue-800 shadow-md text-white">
         <div className="text-2xl font-bold">Dimas.Net</div>
         <ul className="flex space-x-6 text-sm">
@@ -30,25 +33,59 @@ function Transactions() {
         </ul>
       </nav>
 
-      <div className="p-8 flex-grow">
-        <h1 className="text-2xl font-bold text-blue-900 mb-6">Paket Data Internet</h1>
+      {/* Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="p-8 flex-grow"
+      >
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="flex items-center text-blue-700 hover:text-blue-900 mb-6 transition"
+        >
+          <ArrowLeft className="mr-2" size={18} />
+          <span>Kembali</span>
+        </button>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+        <h1 className="text-3xl font-bold text-blue-900 mb-6 text-center">Paket Data Internet</h1>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {packages.map(pkg => (
-            <div key={pkg.id} className="bg-white p-4 rounded shadow">
-              <h2 className="text-xl font-semibold text-blue-800">{pkg.name}</h2>
-              <p className="text-gray-700 mb-2">Harga: Rp{pkg.price.toLocaleString()}</p>
+            <motion.div
+              key={pkg.id}
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="relative bg-white p-6 rounded-2xl shadow-lg border hover:shadow-xl transition"
+            >
+              {/* Highlight Badge */}
+              <div className="absolute -top-3 -right-3 bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
+                Best Deal
+              </div>
+
+              {/* Paket Name */}
+              <h2 className="text-2xl font-extrabold text-blue-800 mb-4 uppercase tracking-wide">
+                {pkg.name}
+              </h2>
+
+              {/* Price Tag */}
+              <div className="inline-block bg-blue-600 text-white font-bold text-xl px-4 py-2 rounded-lg shadow-md mb-6">
+                Rp{pkg.price.toLocaleString()}
+              </div>
+
               <button
                 onClick={() => handleBuy(pkg)}
-                className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded"
+                className="w-full bg-blue-600 hover:bg-blue-800 text-white py-2 rounded-lg font-medium transition"
               >
                 Beli Paket
               </button>
-            </div>
+            </motion.div>
           ))}
         </div>
-      </div>
+      </motion.div>
 
+      {/* Footer */}
       <footer className="bg-blue-800 py-6 text-center text-sm text-gray-300">
         &copy; 2025 Dimas Rosyidin
       </footer>
