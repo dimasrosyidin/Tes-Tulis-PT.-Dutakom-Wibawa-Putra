@@ -29,6 +29,10 @@ Asal Instansi : Politeknik Negeri Malang
 
 - Landing Page
 ![alt text](image-3.png)
+
+- About Us 
+![alt text](image-13.png)
+        Pada fitur ini akan mengarah pada WebsitePT. Dutakom Wibawa Putra
 - Login
 ![alt text](image-1.png)
 - Register 
@@ -50,7 +54,7 @@ Asal Instansi : Politeknik Negeri Malang
 Pada fitur cetak invoice, setelah checkout paket data. Pengguna dapat mendownload invoice berupa pdf
 - Riwayat Transaksi 
 ![alt text](image-9.png)
-Pada riwayat transaksi, pengguna dapat memfilter tanggal transaksi serta dapat edit dan hapus riwayat transaksi
+Pada riwayat transaksi, pengguna dapat memfilter tanggal transaksi menggunakan ant design serta dapat edit dan hapus riwayat transaksi
 - API (Endpoint Dummy)
 ![alt text](image-10.png)
 ![alt text](image-11.png)
